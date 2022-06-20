@@ -37,64 +37,19 @@
                             <div class="card-body">
                                 <h4 class="card-title">Define Your Conic Curve</h4>
                                 <h6 class="text-muted card-subtitle mb-2">Enter your data into our system and we do the rest!<br></h6>
-                                <form>
-                                    <div class="row text-end">
-                                        <div class="col-3"><label class="col-form-label">Type of Curve</label></div>
-                                        <div class="col"><select class="form-select" id="curveselection" onclick="curveselect()">
-                                                <option value="0" selected="">Select a Conic Curve</option>
-                                                <option value="1">Circle</option>
-                                                <option value="2">Ellipse</option>
-                                                <option value="3">Parabola</option>
-                                            </select></div>
-                                    </div>
+                                <form id="uiform">
                                     <div>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="card" id="circleinput" hidden="true">
+                                                <div class="card" id="curve-select">
                                                     <div class="card-body">
-                                                        <h6 class="text-muted card-subtitle mb-2">Define your circle parameters:</h6>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">x-center</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">y-center</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">radius</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="card" id="ellipseinput" hidden="true">
-                                                    <div class="card-body">
-                                                        <h6 class="text-muted card-subtitle mb-2">Define your ellipse parameters:</h6>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">x-center</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">y-center</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">a</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">b</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
-                                                        </div>
-                                                        <div class="row align-items-center">
-                                                            <div class="col-3 text-end"><label class="col-form-label">rotation (deg)</label></div>
-                                                            <div class="col-5"><input class="form-control" type="number"></div>
+                                                        <div class="row text-end">
+                                                            <div class="col-3"><label class="col-form-label">Type of Curve</label></div>
+                                                            <div class="col"><select class="form-select form-control" id="curveselection" onclick="curveselect()" name="csel">
+                                                                    <option value="0" selected="">Select a Conic Curve</option>
+                                                                    <option value="1">Circle</option>
+                                                                    <option value="2">Ellipse</option>
+                                                                </select></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,9 +57,83 @@
                                         </div>
                                     </div>
                                 </form>
+                                <form id="circleform">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card" id="circleinput">
+                                                    <div class="card-body">
+                                                        <h6 class="text-muted card-subtitle mb-2">Define your circle parameters:</h6>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">x-center</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" id="cirxc" name="cir-xc" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">y-center</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" id="ciryc" name="cir-yc" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">radius</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="cir-r" min="0" max="10" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form id="ellipseform">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card" id="ellipseinput">
+                                                    <div class="card-body">
+                                                        <h6 class="text-muted card-subtitle mb-2">Define your ellipse parameters:</h6>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">x-center</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="eli-xc" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">y-center</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="eli-yc" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">a</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="eli-a" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">b</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="eli-b" min="-10" max="10" required=""></div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-3 text-end"><label class="col-form-label">rotation (deg)</label></div>
+                                                            <div class="col-5"><input class="form-control" type="number" name="eli-rot" min="0" max="1" required=""></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form> <div class="card">
+                            <div class="card-body">
+                                <form action="/" id="djform" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="e1FWGB5W3rsHl5pWHASluiXVZsSTMSDIu1zCMxCqT0ahKGFOk9YlbRYZVmlDSIGc">
+                                    
+
+<div id="div_id_a" class="form-group"> <label for="id_a" class=" requiredField">
+                A<span class="asteriskField">*</span> </label> <div> <input type="number" name="a" class="numberinput form-control" required id="id_a"> </div> </div> <div id="div_id_b" class="form-group"> <label for="id_b" class=" requiredField">
+                B<span class="asteriskField">*</span> </label> <div> <input type="number" name="b" class="numberinput form-control" required id="id_b"> </div> </div> <div id="div_id_c" class="form-group"> <label for="id_c" class=" requiredField">
+                C<span class="asteriskField">*</span> </label> <div> <input type="number" name="c" class="numberinput form-control" required id="id_c"> </div> </div> <div id="div_id_d" class="form-group"> <label for="id_d" class=" requiredField">
+                D<span class="asteriskField">*</span> </label> <div> <input type="number" name="d" class="numberinput form-control" required id="id_d"> </div> </div> <div id="div_id_e" class="form-group"> <label for="id_e" class=" requiredField">
+                E<span class="asteriskField">*</span> </label> <div> <input type="number" name="e" class="numberinput form-control" required id="id_e"> </div> </div> <div id="div_id_f" class="form-group"> <label for="id_f" class=" requiredField">
+                F<span class="asteriskField">*</span> </label> <div> <input type="number" name="f" class="numberinput form-control" required id="id_f"> </div> </div>
+
+                                </form>
+                            </div>
+                        </div>
                                 <div class="row" style="padding-top: 1em;">
                                     <div class="col col-3"></div>
-                                    <div class="col text-end"><a class="btn btn-light" role="button" href="library.html">Cancel</a><a class="btn btn-primary" role="button">Submit</a></div>
+                                    <div class="col text-end"><a class="btn btn-light" role="button" href="library.html">Cancel</a><a class="btn btn-primary" role="button" onclick="process_ui()">Submit</a></div>
                                 </div>
                             </div>
                         </div>
