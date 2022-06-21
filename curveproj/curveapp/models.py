@@ -5,32 +5,21 @@ from django.db.models import Max
 from django.forms import ModelForm
 
 # Create your models here.
-class circleinput(models.Model):
-    circle_x = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    circle_y = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    circle_radius = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-
-    def __str__(self):
-        return 'Circle: %d %d %d' %(self.circle_x, self.circle_y, self.circle_radius)
-
-class ellipseinput(models.Model):
-    ellipse_x = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    ellipse_y = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    ellipse_a = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    ellipse_b = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000000000)])
-    ellipse_rot = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(360)])
-
-    def __str__(self):
-        return 'Ellipse: %d %d %d %d %d' %(self.ellipse_x, self.ellipse_y, self.ellipse_a, self.ellipse_b, self.ellipse_rot)
-
-
 class conicselection(models.Model):
-    a = models.IntegerField()
-    b = models.IntegerField()
-    c = models.IntegerField()
-    d = models.IntegerField()
-    e = models.IntegerField()
-    f = models.IntegerField()
+    # t designates type of curve: 1 is circle, 2 is ellipse
+    t = models.IntegerField()
+    # conic specified as: ax^2 + bxy + cy^2 + dx + ey + f = 0
+    a = models.FloatField()
+    b = models.FloatField()
+    c = models.FloatField()
+    d = models.FloatField()
+    e = models.FloatField()
+    f = models.FloatField()
 
     def __str__(self):
-        return 'Info: %d %d %d %d %d %d' %(self.a, self.b, self.c, self.d, self.e, self.f)
+        temp = 'Circle' if self.t == 1 else 'Ellipse'
+        return '%s' %(temp)
+        # return '%s (a,b,c,d,e,f): (%g, %g, %g, %g, %g, %g)' %(temp, self.a, self.b, self.c, self.d, self.e, self.f)
+
+    def cvalues(self):
+        return '(a,b,c,d,e,f): (%g, %g, %g, %g, %g, %g)' %(self.a, self.b, self.c, self.d, self.e, self.f)

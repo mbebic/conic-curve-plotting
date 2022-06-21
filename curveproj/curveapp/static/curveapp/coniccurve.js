@@ -1,4 +1,5 @@
 function curveselect() {
+    console.log("entering curve select func")
     var selection = document.getElementById("curveselection");
     if (selection.value == 0) {
         document.getElementById("circleinput").hidden=true;
@@ -26,7 +27,7 @@ function remove_validation_css() {
 
 function apply_validation_css() {
     let csel = document.getElementById("curveselection");
-    console.log("applying validation css" +csel.value)
+    console.log("applying validation css: " +csel.value)
     uiform.classList.add("was-validated");
     if (csel.value === '1') {
         let cform = document.getElementById("circleform");
@@ -86,6 +87,7 @@ function pop_djform() {
         let yc = parseFloat(uiform["cir-yc"].value);
         let r = parseFloat(uiform["cir-r"].value);
 
+        djform["t"].value = 1;
         djform["a"].value = 1;
         djform["b"].value = 0;
         djform["c"].value = 1;
@@ -103,6 +105,7 @@ function pop_djform() {
         let eli_b = parseFloat(uiform["eli-b"].value);
         let eli_rot = parseFloat(uiform["eli-rot"].value);
 
+        djform["t"].value = 2;
         djform["a"].value = 1/(eli_a**2);
         djform["b"].value = 0;
         djform["c"].value = 1/(eli_b**2);

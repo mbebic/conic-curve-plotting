@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'curveapp',
+    'django.contrib.humanize',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

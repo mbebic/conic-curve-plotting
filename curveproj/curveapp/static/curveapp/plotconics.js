@@ -1,0 +1,110 @@
+"use strict";
+
+var plottedarray;
+var curveindex;
+var nshown = 0;
+
+document.addEventListener("DOMContentLoaded", set_up_ui());
+
+// update to pass id to server and return a json object with x and y data points
+function getcurve(curve_id) {
+    console.log("function got called")
+    const myRequest = new Request("http://" + calcconic, {
+            method: 'POST', 
+            headers: {
+                "X-CSRFToken": Cookies.get('csrftoken'),
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            cache: 'no-cache',
+            body: JSON.stringify({id: curve_id})
+        });
+    fetch(myRequest)
+        .then(response => response.json())
+        .then(result => {
+            return result;
+            // document.getElementById("nall").innerHTML = result.nAll;
+            // document.getElementById("ncln").innerHTML = result.nCln;
+            // document.getElementById("nexp").innerHTML = result.nExp;
+            // document.getElementById("nfrac").innerHTML = result.nFrac;
+            // document.getElementById('id-cards').value = result.cards;
+        })
+        .catch(error => {
+            console.error('Error: ', error);
+            console.log(temp)
+        });
+}
+
+function getcurvefake(id) {
+    let x = Array.from(Array(100).keys());
+    let y = Array.from({length:100}, () => Math.random());
+    return {"x": x, "y": y, "name": id}
+    // return 'test'
+
+}
+
+// called by Refresh Plots button.
+function processtable() {
+    let t = document.getElementById("conictable"); // table of curves populated from django database
+    let box = document.getElementById("curveoutput"); // output box for development, hide when done
+
+    for (var i = 1; i < t.rows.length; i++) {
+        let r = t.rows[i]; // retrieving table row
+        let l = r.cells.length; // need length to access last element
+        let s = r.cells[l-1].childNodes[0]; // by convention, last element is a checkbox
+        let id = r.cells[0].innerHTML; // retrieving curve id
+        if (s.checked) { 
+            // box is checked, see if curve is already plotted 
+            if (plottedarray[i] === 0) {
+                // not plotted, need to add
+                // call a function that sends an id to the server and returns
+                // json object with x and y coordinates of the plot
+                // call real function at later date
+                let curvedata = getcurvefake(id);
+                // add curve using data real
+                // To add traces, we need to: 
+                let g = document.getElementById("graph");
+                Plotly.addTraces(g, [curvedata], nshown);
+                curveindex[i] = nshown;
+                box.innerHTML += 'Add curve ID '+id+' to Index '+curveindex[i]+'\n';
+                nshown += 1;
+                plottedarray[i] = 1; // registering curve addition
+                
+            } 
+        }
+        else {
+            // box is unchecked, see if curve needs to be removed
+            if (plottedarray[i] === 1) {
+                // plotted, need to remove
+                let g = document.getElementById("graph");
+                let ix = curveindex[i];
+                Plotly.deleteTraces(g, ix); // removed trace
+                curveindex[i] = null; // updated the cooresponding index val
+                // drop indices of remaining curves
+                curveindex.forEach((x, j) => {if (x > ix) {curveindex[j] = x-1}});
+                box.innerHTML += 'Remove curve ID '+id+' Index '+curveindex[i]+'\n';
+                nshown += -1;
+                plottedarray[i] = 0; // registering curve removal
+            }
+        }
+    }
+}
+
+function set_up_ui() {
+    let t = document.getElementById("conictable");
+    // fills array of conic tables length -1 to accomodate for the
+    // row of the table headers
+    plottedarray = Array(t.rows.length).fill(0);
+    curveindex = Array(t.rows.length).fill(null);
+    // Create an empty graph using Plotly 
+    let g = document.getElementById("graph");
+    Plotly.newPlot(g, []);
+    // Plotly.addTraces(g);
+
+    
+
+    // To delete traces, we need to:
+    // Plotly.deleteTraces(g, 3) the number specifying which trace in order of plotting
+}
+

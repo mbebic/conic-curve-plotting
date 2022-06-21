@@ -20,13 +20,27 @@ function curveselect() {
 
 function remove_validation_css() {
     document.getElementById("uiform").classList.remove("was-validated");
+    document.getElementById("circleform").classList.remove("was-validated");
+    document.getElementById("ellipseform").classList.remove("was-validated");
 }
 
 function apply_validation_css() {
-    document.getElementById("uiform").classList.add("was-validated");
+    let csel = document.getElementById("curveselection");
+    console.log("applying validation css" +csel.value)
+    uiform.classList.add("was-validated");
+    if (csel.value === '1') {
+        let cform = document.getElementById("circleform");
+        cform.classList.add("was-validated");
+    }
+    else if (csel.value === '2') {
+        let eform = document.getElementById("ellipseform");
+        eform.classList.add("was-validated");
+    }
 }
 
 function process_ui() {
+    console.log("entered process ui")
+    let uiform = document.getElementById("uiform");
     let ui_valid = validateuiform();
     if (ui_valid) {
         pop_djform();
@@ -39,27 +53,35 @@ function process_ui() {
 
 function validateuiform() {
     let ctype = document.getElementById("curveselection");
-
+    let uiform = document.getElementById("uiform");
+    let uivalid = true;
+    console.log("ctype val: "+ctype.value)
     if (ctype.value === '0') {
         ctype.setCustomValidity("Must select a curve");
-        // input span notifying user to select a curve
-        uiform.classList.add("was-validated"); // paints the form with validation css
-        return false;
     }
-
-    else {
+    else if (ctype.value === '1') {
         ctype.setCustomValidity("");
-        uiform.classList.add("was-validated"); // paints the form with validation css
-        return uiform.checkValidity();
-
+        temp = document.getElementById("circleform").checkValidity();
+        uivalid = uivalid && temp;
     }
+    else if (ctype.value === '2') {
+        ctype.setCustomValidity("");
+        temp = document.getElementById("ellipseform").checkValidity();
+        uivalid = uivalid && temp;
+    }
+    temp = ctype.checkValidity();
+    uivalid = uivalid && temp;
+    apply_validation_css();
+    return uivalid;
 }
+
 
 function pop_djform() {
     let djform = document.getElementById("djform");
-    conicselect = document.getElementById("curveselection");
+    let conicselect = document.getElementById("curveselection");
 
     if (conicselect.value === '1') {
+        let uiform = document.getElementById("circleform");
         let xc = parseFloat(uiform["cir-xc"].value);
         let yc = parseFloat(uiform["cir-yc"].value);
         let r = parseFloat(uiform["cir-r"].value);
@@ -70,11 +92,11 @@ function pop_djform() {
         djform["d"].value = -2*xc;
         djform["e"].value = -2*yc;
         djform["f"].value = xc**2+yc**2-r**2;
-        console.log(djform["a"].value)
         
     }
 
     else if (conicselect.value === '2') {
+        let uiform = document.getElementById("ellipseform");
         let xc = parseFloat(uiform["eli-xc"].value);
         let yc = parseFloat(uiform["eli-yc"].value);
         let eli_a = parseFloat(uiform["eli-a"].value);
@@ -86,14 +108,14 @@ function pop_djform() {
         djform["c"].value = 1/(eli_b**2);
         djform["d"].value = -2*xc/(eli_a**2);
         djform["e"].value = -2*yc/(eli_b**2);
-        djform["f"].value = (xc**2/eli_a**2)+(yc**2/eli_b**2)-r**2;
-        console.log(djform["a"].value)
+        djform["f"].value = (xc**2/eli_a**2)+(yc**2/eli_b**2)-1;
     }
     else {
         console.log("nothing was done")
     }
 
     djform.submit();
+    // document.forms['djform'].submit();
 }
 
 function set_up_ui() {
