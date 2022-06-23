@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.urls import reverse
 from django import forms
 import plotly.graph_objects as go
@@ -14,6 +14,7 @@ from .models import conicselection
 # Create your views here.
 
 @csrf_protect
+@ensure_csrf_cookie
 def index(request):
     if request.method == "POST":
         form = conicForm(request.POST)
@@ -31,20 +32,6 @@ def index(request):
     return render(request, 'curveapp/index.html', {
         "form": form
     })
-
-# import json
-# import numpy as np
-# def makexy(a,b,c,d,e,f):
-#     # do the work here - create x, y numpy arrays as practiced in jupyter
-#     # for now creating just a sinewave
-#     x=np.linspace(0,2*np.pi,100)
-#     y = np.sin(x)
-#     temp = {'x': x.tolist(), 'y':y.tolist()}
-
-#     return json.dumps(temp, indent=2)
-
-# def curveplotdata():
-#     return 
 
 def conicgraph(request):
     x = [-2,0,4,6,7]
@@ -64,9 +51,10 @@ def conicgraph(request):
         "graph": figure.to_html()
     })
 
-def testlookup(request, curve_id):
-    curve = conicselection.objects.get(pk=curve_id)
+# def testlookup(request, curve_id):
+#     curve = conicselection.objects.get(pk=curve_id)
 
+@ensure_csrf_cookie
 def library(request):
     return render(request, "curveapp/library.html", {
         "curvedata": conicselection.objects.all(),
