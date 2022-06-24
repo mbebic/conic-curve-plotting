@@ -5,7 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from curveapp.models import conicselection
 from curveapp.plotting import plot_conic
 # Create your views here.
-def index(request):
+def calculate(request):
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
 
@@ -23,5 +23,4 @@ def index(request):
         
         except:
             return JsonResponse({'error': 'failed'})
-                
                 

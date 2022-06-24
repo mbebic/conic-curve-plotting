@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="column">
-                                <a class="btn btn-primary" role="button" type="submit" onclick="processtable()">Refresh Plots</a>
+                                <div class="btn btn-primary" role="button" type="submit" onclick="processtable()">Refresh Plots</div>
                             </div>
                         </div>
                         <div class="row">
@@ -63,8 +63,60 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col">
+                                <div class="mt-3"><div class="btn" data-bs-toggle="collapse" aria-expanded="true" aria-controls="graphsetup" href="#graphsetup" role="button" style="padding: 0;"><svg class="bi bi-chevron-expand" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z"></path>
+                                        </svg> Customize your graph</div>
+                                    <div id="graphsetup" class="collapse show">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set x-min</span><input id="xmin" class="form-control" type="number" value="5" min="-10" max="10" step="1" /></div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set y-min</span><input id="ymin" class="form-control" type="number" value="5" min="-10" max="10" step="1" /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set x-max</span><input id="xmax" class="form-control" type="number" value="5" min="-10" max="10" step="1" /></div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set y-max</span><input id="ymax" class="form-control" type="number" value="5" min="-10" max="10" step="1" /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set title</span><input id="gtitle" class="form-control" type="text" placeholder="Input your graph title here" /></div>
+                                                            </div>
+                                                            <div class="col" hidden>
+                                                                <div class="input-group mb-3"><span class="input-group-text col-9 col-sm-6" data-bs-toggle="tooltip">Set y-max</span><input id="ymax" class="form-control" type="number" value="5" min="-10" max="10" step="1" /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="column">
+                                                                <div class="btn btn-primary" role="button" type="submit" onclick="graphgridsetup()">Refresh Grid</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="column">
                                 <textarea class="form-control" id="curveoutput" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="column">
+                                <div class="btn btn-primary" role="button" type="submit" onclick="clearbox()">Clear Box</div>
                             </div>
                         </div>
                     </div>
@@ -77,6 +129,7 @@
 {% block script %}
     <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js" integrity="sha256-0H3Nuz3aug3afVbUlsu12Puxva3CP4EhJtPExqs54Vg=" crossorigin="anonymous"></script>
-    <script>var calcconic = "{{ request.get_host }}/calcconic/"</script>
+    <script>calcconic_url = "{% url 'calculate' %}"</script> <!-- solving for circles, ellipses-->
+    <!-- add other urls for other solvers-->
     <script src="{% static 'curveapp/plotconics.js' %}"></script>
 {% endblock %}

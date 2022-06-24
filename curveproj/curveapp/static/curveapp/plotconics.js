@@ -3,7 +3,6 @@
 var plottedarray;
 var curveindex;
 var nshown = 0;
-var jzb;
 
 document.addEventListener("DOMContentLoaded", set_up_ui());
 
@@ -64,18 +63,16 @@ function processtable() {
                 if (runlocally) {
                     // Create fake data locally and add it to graph 'g' at position 'nshown'
                     let curvedata = getcurvefake(id);
-                    Plotly.addTraces(g, [curvedata], nshown);
+                    Plotly.addTraces(g, x="test label", [curvedata], nshown);
                 }
                 else {
                     // Call an asynchronous function that sends an id to the server
                     // obtains xy data, and adds it to graph 'g' at position 'nshown'
-                    plotcurve(id, g, nshown);
+                    plotcurve(id, g, i);
                 }
                 
                 // Update tracking variables
-                curveindex[i] = nshown;
                 box.innerHTML += 'Add curve ID '+id+' to Index '+curveindex[i]+'\n';
-                nshown += 1;
                 plottedarray[i] = 1; // registering curve addition
             } 
         }
@@ -98,9 +95,9 @@ function processtable() {
 }
 
 // Obtains the curve points by id and plots it to graph 'g' at position 'n'
-function plotcurve(cid, g, n) {
+function plotcurve(cid, g, i) {
     console.log("Making a fetch request for cid=" + cid);
-    const myRequest = new Request("http://" + calcconic, {
+    const myRequest = new Request(calcconic_url, { // calcconic_url assigned in html script block
             method: 'POST', 
             headers: {
                 "X-CSRFToken": Cookies.get('csrftoken'),
@@ -117,7 +114,10 @@ function plotcurve(cid, g, n) {
         // output xy inot text box to see if resolving correctly
         // document.getElementById("curveoutput").innerHTML += JSON.stringify(curvexy)+'\n';
         // add curve to the existing plotly graph
-        Plotly.addTraces(g, [curvexy], n);
+        console.log("adding curve id "+cid+" at index "+nshown);
+        Plotly.addTraces(g, [curvexy], nshown);
+        curveindex[i] = nshown;
+        nshown += 1;
     })
     .catch(error => {
         console.error('Error: ', error);
@@ -135,6 +135,45 @@ function set_up_ui() {
     curveindex = Array(t.rows.length).fill(null);
     // Create an empty graph using Plotly 
     let g = document.getElementById("graph");
-    Plotly.newPlot(g, []);
+    let layout  = {
+        // xaxis: {
+        //     autorange: false,
+        //     range: [-10,10]
+        // },
+        yaxis: {
+            // autorange: false,
+            scaleanchor: 'x', 
+            scaleratio: 1
+        }
+    };
+    Plotly.newPlot(g, [], layout);
 }
 
+function clearbox() {
+    let temp = document.getElementById("curveoutput");
+    temp.value = '';
+}
+
+function graphgridsetup() {
+    let xmin = document.getElementById("xmin").value;
+    let xmax = document.getElementById("xmax").value;
+    let ymin = document.getElementById("ymin").value;
+    let ymax = document.getElementById("ymax").value;
+    let gtitle = document.getElementById("gtitle").value;
+
+    let g = document.getElementById("graph");
+    
+    let update = {
+        title: gtitle,
+
+        'xaxis.range': [xmin,xmax],
+        'yaxis.range': [ymin,ymax]
+    }
+
+    Plotly.relayout(g, update);
+    // graph.layout.xaxis.range[0] = xmin;
+    // graph.layout.xaxis.range[1] = xmax;
+    // graph.layout.yaxis.range[0] = ymin;
+    // graph.layout.yaxis.range[1] = ymax;
+
+}

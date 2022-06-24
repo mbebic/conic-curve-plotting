@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'curveapp',
+    # 'calcconic',
     'django.contrib.humanize',
 ]
 
