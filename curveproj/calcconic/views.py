@@ -4,7 +4,18 @@ import logging
 from django.http import HttpResponse, JsonResponse
 from curveapp.models import conicselection
 from curveapp.plotting import plot_conic
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+from curveapp.views import is_member
 # Create your views here.
+
+# The subsequent decorators correctly protect the endpoint, but they 
+# respond with a full page rather than a JSON object. 
+# Handle in the calling function  as described here: https://stackoverflow.com/a/37121496
+
+# We can also make a new function decorator as its own definition in this page
+@login_required(login_url="login")
+@user_passes_test(is_member, login_url="error")
 def calculate(request):
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':

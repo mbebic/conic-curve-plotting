@@ -26,11 +26,33 @@
                         <nav class="navbar navbar-light navbar-expand-md">
                             <div class="container-fluid"><a class="navbar-brand align-text-bottom" href="{% url 'index' %}">Conic Curve Plotter</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-3"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                                 <div class="collapse navbar-collapse" id="navcol-3">
+                                    <div>
+                                        {% if user.is_authenticated %}
+                                            Signed in as <strong> {{ user.username }}</strong>
+                                        {% else %}
+                                            Not signed in.
+                                        {% endif %}
+                                    </div>
                                     <ul class="navbar-nav ms-auto">
-                                        <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}">Define Your Curve</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'library' %}"><span style="color: rgba(0, 0, 0, 0.9);">Curve Library</span><br></a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Extra idk</a></li>
-                                    </ul><a class="btn btn-primary ms-md-2" role="button" href="#">Button</a>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="{% url 'index' %}">Define Your Curve</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'library' %}"><span style="color: rgba(0, 0, 0, 0.9);">Curve Library</span><br></a>
+                                        </li>
+                                        {% if user.is_authenticated %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{}">Register</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
                                 </div>
                             </div>
                         </nav>
