@@ -6,6 +6,13 @@
 {% block body %}
     <div class="container">
         <h2>Your Library</h2>
+        <p>
+            {% if user.is_authenticated %}
+                Group permissions: <strong> {{ user.username }}</strong>
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </p>
         <div class="row">
             <div class="column">
                 <div class="card">
