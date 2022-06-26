@@ -6,36 +6,6 @@ var nshown = 0;
 
 document.addEventListener("DOMContentLoaded", set_up_ui());
 
-// update to pass id to server and return a json object with x and y data points
-// function getcurve(curve_id) {
-//     console.log("function got called")
-//     const myRequest = new Request("http://" + calcconic, {
-//             method: 'POST', 
-//             headers: {
-//                 "X-CSRFToken": Cookies.get('csrftoken'),
-//                 "Accept": "application/json",
-//                 "Content-Type": "application/json",
-//                 'X-Requested-With': 'XMLHttpRequest'
-//             },
-//             cache: 'no-cache',
-//             body: JSON.stringify({id: curve_id})
-//         });
-//     fetch(myRequest)
-//         .then(response => response.json())
-//         .then(result => {
-//             return result;
-//             // document.getElementById("nall").innerHTML = result.nAll;
-//             // document.getElementById("ncln").innerHTML = result.nCln;
-//             // document.getElementById("nexp").innerHTML = result.nExp;
-//             // document.getElementById("nfrac").innerHTML = result.nFrac;
-//             // document.getElementById('id-cards').value = result.cards;
-//         })
-//         .catch(error => {
-//             console.error('Error: ', error);
-//             console.log(temp)
-//         });
-// }
-
 function getcurvefake(id) {
     let x = Array.from(Array(100).keys());
     let y = Array.from({length:100}, () => Math.random());
