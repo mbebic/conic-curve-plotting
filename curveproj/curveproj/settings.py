@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'curveapp',
-    # 'calcconic',
+    'calcconic', # must register to support permissions based access to API endpoints 
     'django.contrib.humanize',
 ]
 

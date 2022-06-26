@@ -37,13 +37,13 @@ function processtable() {
                 }
                 else {
                     // Call an asynchronous function that sends an id to the server
-                    // obtains xy data, and adds it to graph 'g' at position 'nshown'
+                    // obtains xy data, adds it to graph 'g' at position 'nshown' and 
+                    // updates tracking variables
                     plotcurve(id, g, i);
                 }
                 
-                // Update tracking variables
+                // Post action to msg box, tracking variables are updated within plot_curve 
                 box.innerHTML += 'Add curve ID '+id+' to Index '+curveindex[i]+'\n';
-                plottedarray[i] = 1; // registering curve addition
             } 
         }
         else {
@@ -80,9 +80,12 @@ function plotcurve(cid, g, i) {
         });
     fetch(myRequest)
     .then(response => {
+        if (response.status === 403){
+            throw new Error('You are not authorized to use this resource.');
+        }
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-          throw new TypeError("Oops, we haven't got JSON!");
+          throw new TypeError("Returned object is not a JSON");
         }
         return response.json();
      })
@@ -92,11 +95,17 @@ function plotcurve(cid, g, i) {
         // add curve to the existing plotly graph
         console.log("adding curve id "+cid+" at index "+nshown);
         Plotly.addTraces(g, [curvexy], nshown);
-        curveindex[i] = nshown;
+        plottedarray[i] = 1; // registering curve addition
+        curveindex[i] = nshown; // memorizing curve index within the Plotly traces stack
         nshown += 1;
     })
     .catch(error => {
-        console.error('Error: ', error);
+        // The curve cannot be plotted, publish the error message to the console and return
+        console.error(error);
+        // Note that the checkmark in the table will remain. This is an artifact of a demo 
+        // nature of this app, not a real problem. User authorizations in a production app are handled 
+        // *before* a call to fetch is even attempted; this level of error handling is here just to 
+        // aid in troubleshooting during development.  
     });
 }
 

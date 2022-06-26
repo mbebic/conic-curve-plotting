@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import Permission
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -13,8 +14,10 @@ from .models import conicselection
 
 # Create your views here.
 
+# This function illustrates usage of user_passes_test decorator
+# addapted from: https://stackoverflow.com/a/20110261
 def is_member(user):
-    return user.groups.filter(name="CircleGroup").exists()
+    return user.groups.filter(name="calcconic-subscribers").exists()
 
 @csrf_protect
 @ensure_csrf_cookie
@@ -36,13 +39,13 @@ def index(request):
         "form": form
     })
 
-# @login_required(login_url="login")
-# @user_passes_test(is_member, login_url="error")
+@login_required(login_url="login")
+@user_passes_test(is_member, login_url="error")
 @ensure_csrf_cookie
 def library(request):
     return render(request, "curveapp/library.html", {
             "curvedata": conicselection.objects.all(),
-            "permissions": user.get_group_permissions()
+            # "permissions": Permission.objects.filter(user=request.user)
         })
     # if is_member(request.user, "CircleGroup"):
     #     return render(request, "curveapp/library.html", {

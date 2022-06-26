@@ -12,16 +12,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='conicselection',
+            name='CalcRights',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('t', models.IntegerField()),
-                ('a', models.FloatField()),
-                ('b', models.FloatField()),
-                ('c', models.FloatField()),
-                ('d', models.FloatField()),
-                ('e', models.FloatField()),
-                ('f', models.FloatField()),
             ],
+            options={
+                'permissions': (('can_calc_conics', 'Allowed to calculate conics'),),
+                'managed': False,
+                'default_permissions': (),
+            },
         ),
     ]
