@@ -79,7 +79,13 @@ function plotcurve(cid, g, i) {
             body: JSON.stringify({id: cid})
         });
     fetch(myRequest)
-    .then(response => response.json())
+    .then(response => {
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new TypeError("Oops, we haven't got JSON!");
+        }
+        return response.json();
+     })
     .then(curvexy => {
         // output xy inot text box to see if resolving correctly
         // document.getElementById("curveoutput").innerHTML += JSON.stringify(curvexy)+'\n';
