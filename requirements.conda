@@ -6,7 +6,6 @@ ca-certificates=2022.6.15=h5b45459_0
 certifi=2022.6.15=py39hcbf5309_0
 dj-database-url=0.5.0=py_0
 django=4.0.4=py39hcbf5309_0
-django-crispy-forms=1.14.0=pypi_0
 django-heroku=0.3.1=pyhd8ed1ab_2
 intel-openmp=2022.1.0=h57928b3_3787
 krb5=1.19.2=h5b6d351_0
@@ -40,3 +39,5 @@ wheel=0.37.1=pyhd3eb1b0_0
 whitenoise=5.3.0=pyhd8ed1ab_0
 wincertstore=0.2=py39haa95532_2
 zlib=1.2.12=h8cc25b3_2
+# Install the packages below using pip install
+# django-crispy-forms=1.14.0=pypi_0
