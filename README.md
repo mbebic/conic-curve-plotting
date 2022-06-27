@@ -33,10 +33,10 @@ The proof-of-concept ui works as follows.
 
 1) Anyone can define new curves. 
 1) Only the members of ```calcconic-subscribers``` can see the library of curves.
-1) The same members can call the back-end calculations.
-To demonstrate permission-based access to back-end calculations, chnage the code to allow everyone to access the library page.
+1) Only these same members can call the back-end calculations.
+To demonstrate the permission-based access to back-end calculations, change the code in ```curveapp\views.py``` to allow anyone to access the library page.
 Then, when a non-member attempts to plot, a 403 status is returned and reported in the console.
-1) There is an illustrative example of permissions checking within ```library.html``` template.
+1) Usage of permission checking within html code is illustrated within the ```library.html``` template.
 
 # Misc
 
