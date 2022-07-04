@@ -20,7 +20,7 @@ This will build the database with three users and configured permissions to show
 
 | username | password |
 |----------|----------|
-| ```admin``` | ```test1234``` |
+| ```useradmin``` | ```test1234``` |
 | ```userpaid``` | ```paid1234``` |
 | ```userfree``` | ```free1234``` |
 
