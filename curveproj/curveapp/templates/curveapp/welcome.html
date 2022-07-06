@@ -1,0 +1,45 @@
+{% extends 'curveapp/layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="text-center card-title">Welcome to the Conic Curve Plotter App!</h4>
+                    <h6 class="text-center text-muted card-subtitle mb-2">We are here to help you with all your plotting needs. Input your data into our Define Your Curve page, and add it to your Curve Library where you can plot and compare various conic curves you would like to see!</h6>
+                    <div class="row" style="padding-top: 1em;">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="text-center mb-3">Menu Options</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 text-center align-self-center mt-2 mb-2">
+                                    <a class="btn btn-primary" role="button" href="{% url 'index' %}">Define Your Curve</a>
+                                </div>
+                                <div class="col-12 col-md-6 text-center align-self-center mt-2 mb-2">
+                                    <a class="btn btn-primary" role="button" href="{% url 'library' %}">Curve Library</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 text-center align-self-center mt-2 mb-2">
+                                    <a class="btn btn-primary" role="button" href="{% url 'login' %}">Login</a>
+                                </div>
+                                <div class="col-12 col-md-6 text-center align-self-center mt-2 mb-2">
+                                    <button class="btn btn-primary" type="button">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'curveapp/coniccurve.js' %}"></script>
+{% endblock %}

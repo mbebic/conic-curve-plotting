@@ -16,7 +16,7 @@ from .models import conicselection
 
 # This function illustrates usage of user_passes_test decorator
 # addapted from: https://stackoverflow.com/a/20110261
-def is_member(user):
+def is_calcconic_sub(user):
     return user.groups.filter(name="calcconic-subscribers").exists()
 
 @csrf_protect
@@ -26,7 +26,6 @@ def index(request):
         form = conicForm(request.POST)
 
         if form.is_valid():
-            # form = conicForm.save()
             form.save()
             return render(request, 'curveapp/index.html', {
                 "form": form
@@ -40,21 +39,13 @@ def index(request):
     })
 
 @login_required(login_url="login")
-@user_passes_test(is_member, login_url="error")
+@user_passes_test(is_calcconic_sub, login_url="error")
 @ensure_csrf_cookie
 def library(request):
     return render(request, "curveapp/library.html", {
             "curvedata": conicselection.objects.all(),
             # "permissions": Permission.objects.filter(user=request.user)
-        })
-    # if is_member(request.user, "CircleGroup"):
-    #     return render(request, "curveapp/library.html", {
-    #         "curvedata": conicselection.objects.all(),
-    #     })
-    # else:
-    #     return render(request, "curveapp/error.html", {
-    #         "message": "You are not authorized to view this page. Contact your supervisor to allow permissions."
-    #     }) 
+        }) 
 
 def error_page(request):
     return render(request, "curveapp/error.html", {
@@ -84,3 +75,32 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+def welcome(request):
+    return render(request, 'curveapp/welcome.html')
+
+# def register(request):
+#     if request.method == "POST":
+#         username = request.POST["username"]
+#         email = request.POST["email"]
+
+#         # Ensure password matches confirmation
+#         password = request.POST["password"]
+#         confirmation = request.POST["confirmation"]
+#         if password != confirmation:
+#             return render(request, "auctions/register.html", {
+#                 "message": "Passwords must match."
+#             })
+
+#         # Attempt to create new user
+#         try:
+#             user = User.objects.create_user(username, email, password)
+#             user.save()
+#         except IntegrityError:
+#             return render(request, "auctions/register.html", {
+#                 "message": "Username already taken."
+#             })
+#         login(request, user)
+#         return HttpResponseRedirect(reverse("index"))
+#     else:
+#         return render(request, "auctions/register.html")
