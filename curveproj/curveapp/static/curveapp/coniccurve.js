@@ -105,13 +105,26 @@ function pop_djform() {
         let eli_b = parseFloat(uiform["eli-b"].value);
         let eli_rot = parseFloat(uiform["eli-rot"].value);
 
-        djform["t"].value = 2;
-        djform["a"].value = 1/(eli_a**2);
-        djform["b"].value = 0;
-        djform["c"].value = 1/(eli_b**2);
-        djform["d"].value = -2*xc/(eli_a**2);
-        djform["e"].value = -2*yc/(eli_b**2);
-        djform["f"].value = (xc**2/eli_a**2)+(yc**2/eli_b**2)-1;
+        if (eli_rot === 0){ 
+            djform["t"].value = 2;
+            djform["a"].value = 1/(eli_a**2);
+            djform["b"].value = 0;
+            djform["c"].value = 1/(eli_b**2);
+            djform["d"].value = -2*xc/(eli_a**2);
+            djform["e"].value = -2*yc/(eli_b**2);
+            djform["f"].value = (xc**2/eli_a**2)+(yc**2/eli_b**2)-1;
+        }
+        else {
+            cos = Math.cos(eli_rot*Math.PI/180);
+            sin = Math.sin(eli_rot*Math.PI/180);
+            djform["t"].value = 2;
+            djform["a"].value = cos**2/(eli_a**2) + sin**2/(eli_b**2);
+            djform["b"].value = 2*sin*cos/(eli_a**2) - 2*sin*cos/(eli_b**2);
+            djform["c"].value =  sin**2/(eli_a**2) + cos**2/(eli_b**2);
+            djform["d"].value = 2*xc*cos/(eli_a**2) -2*yc*sin/(eli_b**2);
+            djform["e"].value = 2*xc*sin/(eli_a**2) +2*yc*cos/(eli_b**2);
+            djform["f"].value = (xc**2/eli_a**2)+(yc**2/eli_b**2)-1;
+        }
     }
     else {
         console.log("nothing was done")

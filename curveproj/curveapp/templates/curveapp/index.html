@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="row align-items-center">
                                                 <div class="col-3 text-end"><label class="col-form-label">rotation (deg)</label></div>
-                                                <div class="col-5"><input class="form-control" type="number" name="eli-rot" min="0" max="1" required=""></div>
+                                                <div class="col-5"><input class="form-control" type="number" name="eli-rot" min="-180" max="180" required=""></div>
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="card">
+                    <div class="card" hidden>
                         <form action="{% url 'index' %}" id="djform" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form|crispy }}

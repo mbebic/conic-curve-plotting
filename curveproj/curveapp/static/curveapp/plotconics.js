@@ -109,8 +109,6 @@ function plotcurve(cid, g, i) {
     });
 }
 
-function make_request(myRequest) {
-}
 
 function set_up_ui() {
     let t = document.getElementById("conictable");
@@ -134,10 +132,6 @@ function set_up_ui() {
     Plotly.newPlot(g, [], layout);
 }
 
-function clearbox() {
-    let temp = document.getElementById("curveoutput");
-    temp.value = '';
-}
 
 function graphgridsetup() {
     let xmin = document.getElementById("xmin").value;
