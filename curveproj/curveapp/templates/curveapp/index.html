@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="card">
+                    <div class="card" hidden>
                         <form action="{% url 'index' %}" id="djform" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form|crispy }}

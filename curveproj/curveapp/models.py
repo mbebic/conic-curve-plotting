@@ -4,7 +4,7 @@ from django.core.validators import MinLengthValidator, MinValueValidator, MaxVal
 from django.db.models import Max
 from django.forms import ModelForm
 
-# Create your models here.
+# Create your models here
 class conicselection(models.Model):
     # t designates type of curve: 1 is circle, 2 is ellipse
     t = models.IntegerField()
