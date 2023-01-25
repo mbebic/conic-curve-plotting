@@ -117,11 +117,11 @@ Summary of files:
 
 ## Running the application, login procedure and levels of access explained
 1) Clone the repo to your computer system and redirect your command prompt to the project folder by using the `cd foldername` command.
-1) Create the environment for the application to run by inputting the following command:
+2) Create the environment for the application to run by inputting the following command:
 ``` shell
 conda create --name ENVNAME --file requirements.conda (or requirements.txt)
 ```
-1) After cloning the repo run the following: 
+3) After cloning the repo run the following: 
 ``` shell
 python manage.py loaddata data.json
 ```
@@ -148,9 +148,9 @@ To demonstrate the permission-based access to back-end calculations, you can cha
 Then, when a non-member attempts to plot, a 403 status is returned and reported in the console.
 1) Usage of permission checking within html code is illustrated within the ```library.html``` template, starting at line 10.
 
-1) Run the following in your command prompt:
+4) Run the following in your command prompt:
 ``` shell
 python manage.py runserver
 ```
 
-1) Visit the website in your browser. Use any of the following usernames and passwords above and enjoy!
+5) Visit the website in your browser. Use any of the following usernames and passwords above and enjoy!
