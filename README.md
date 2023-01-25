@@ -1,4 +1,4 @@
-# CS50 Final Project - Conic Curve Plotting Application
+# Conic Curve Plotting Application
 
 ## Overview
 As someone with an engineering background, I was inclined to make an application that had functionality in a math classroom.
