@@ -119,8 +119,10 @@ Summary of files:
 1) Clone the repo to your computer system and redirect your command prompt to the project folder by using the `cd foldername` command.
 2) Create the environment for the application to run by inputting the following command:
 ``` shell
-conda create --name ENVNAME --file requirements.conda (or requirements.txt)
+conda create --name ENVNAME --file requirements.conda 
 ```
+A requirements.txt file can also be used. Keep in mind that in the requirements.conda file, there are comments to direct you to manually install django crispy forms using pip install.
+
 3) After cloning the repo run the following: 
 ``` shell
 python manage.py loaddata data.json
