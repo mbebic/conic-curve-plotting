@@ -141,12 +141,12 @@ It is then applied to ```userpaid``` by having their membership in ```calcconic-
 
 The levels of access are as follows:
 
-1) Anyone can define new curves. 
-1) Only the members of ```calcconic-subscribers``` can see the library of curves.
-1) Only these same members can call the back-end calculations.
+- Anyone can define new curves. 
+- Only the members of ```calcconic-subscribers``` can see the library of curves.
+- Only these same members can call the back-end calculations.
 To demonstrate the permission-based access to back-end calculations, you can change the code in ```curveapp\views.py``` to allow anyone to access the library page by removing the ```@user_passes_test(is_calcconic_sub, login_url="error")``` line.
 Then, when a non-member attempts to plot, a 403 status is returned and reported in the console.
-1) Usage of permission checking within html code is illustrated within the ```library.html``` template, starting at line 10.
+- Usage of permission checking within html code is illustrated within the ```library.html``` template, starting at line 10.
 
 4) Run the following in your command prompt:
 ``` shell
