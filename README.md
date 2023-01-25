@@ -150,9 +150,11 @@ To demonstrate the permission-based access to back-end calculations, you can cha
 Then, when a non-member attempts to plot, a 403 status is returned and reported in the console.
 - Usage of permission checking within html code is illustrated within the ```library.html``` template, starting at line 10.
 
-4) Run the following in your command prompt:
+4) Redirect into the project directory where the manage.py file exists by typing ```cd curveproj``` into your command prompt.
+
+5) Run the following in your command prompt:
 ``` shell
 python manage.py runserver
 ```
 
-5) Visit the website in your browser. Use any of the following usernames and passwords above and enjoy!
+6) Visit the website in your browser. Use any of the following usernames and passwords above and enjoy!
